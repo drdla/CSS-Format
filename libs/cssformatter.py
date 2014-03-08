@@ -31,6 +31,8 @@ def normalize_code(code):
 	return code
 
 def apply_LaterPay_style(code):
+	code = fix_0_values(code)
+
 	code = re.sub(r'(\S)\{', r'\1 {', code)								# add space before {
 	code = re.sub(r'{(\s)(\S)', r'{\2', code)							# remove space after {
 	code = re.sub(r'((@media|@[\w-]*keyframes)[^\{]+\{)\s*', r'\1\n', code)	# add \n after @media {
@@ -40,6 +42,8 @@ def apply_LaterPay_style(code):
 	code = re.sub(r'\;\s*(\/\*[^\n]*\*\/)\s*', r'; \1\n', code)			# fix comment after ;
 	code = re.sub(r'((?:@charset|@import)[^;]+;)\s*', r'\1\n', code)	# add \n after @charset & @import
 	code = re.sub(r';\s*([^\};]+?\{)', r';\n\1', code)					# add \n before included selector
+
+	# add space around > + /
 
 	code = re.sub(r'(\/\*[^\n]*\*\/)\s+\}', r'\1}', code)				# remove \n between comment and }
 	code = re.sub(r'(\s)\}', r'\1}', code)								# remove space before }
@@ -136,5 +140,11 @@ def indent_rules(code):
 
 def trim(code):
 	code = re.sub(r'^\s*(\S+(\s+\S+)*)\s*$', r'\1', code)
+
+	return code
+
+def fix_0_values(code):
+	code = re.sub(r'\s0[emprtx%]+', r' 0', code)					# remove unit from 0 values after \s
+	code = re.sub(r':0[emprtx%]+', r':0', code)						# remove unit from 0 values after :
 
 	return code
