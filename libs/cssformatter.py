@@ -46,7 +46,7 @@ def expand_rules(code):
 	return code
 
 def compact_rules(code):
-	code = re.sub(r'(\S)\{(\S)', r'\1 { \2', code)						# add space and after {
+	code = re.sub(r'(\S)\{(\s)(\S)', r'\1 {\2', code)					# add space before and remove space after {
 	code = re.sub(r'((@media|@[\w-]*keyframes)[^\{]+\{)\s*', r'\1\n', code)	# add \n after @media {
 
 	code = re.sub(r'(\S);([^\}])', r'\1; \2', code)						# add space after ;
