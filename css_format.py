@@ -10,7 +10,7 @@ else:
 
 class CssFormatCommand(sublime_plugin.TextCommand):
 
-	def run(self, edit, action='compact'):
+	def run(self, edit):
 		view = self.view
 
 		if view.is_loading():
@@ -19,11 +19,11 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 
 		selection = view.sel()[0]
 		if len(selection) > 0:
-			self.format_selection(edit, action)
+			self.format_selection(edit)
 		else:
-			self.format_whole_file(edit, action)
+			self.format_whole_file(edit)
 
-	def format_selection(self, edit, action):
+	def format_selection(self, edit):
 		view = self.view
 		regions = []
 
@@ -33,14 +33,14 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 				view.line(max(sel.a, sel.b)).b   # line end of last line
 			)
 			code = view.substr(region)
-			code = format_code(code, action)
+			code = format_code(code)
 			view.replace(edit, region, code)
 
-	def format_whole_file(self, edit, action):
+	def format_whole_file(self, edit):
 		view = self.view
 		region = sublime.Region(0, view.size())
 		code = view.substr(region)
-		code = format_code(code, action)
+		code = format_code(code)
 		view.replace(edit, region, code)
 
 	def is_visible(self):

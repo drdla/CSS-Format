@@ -10,10 +10,10 @@
 
 import re
 
-def format_code(code, action='compact'):
+def format_code(code):
 	code = normalize_code(code)
 	code = apply_LaterPay_style(code)
-	code = re.sub(r'^\s*(\S+(\s+\S+)*)\s*$', r'\1', code)				# trim
+	code = trim(code)
 
 	return code
 
@@ -78,24 +78,22 @@ def comma_rules(code):
 def sort_properties(code):
 	lines = code.split('\n')
 
-	for i in range(len(lines)):
-	    # trim current line to get CSS rule
-	    rule = re.sub(r'^\s*(\S+(\s+\S+)*)\s*$', r'\1', lines[i])
+	# for i in range(len(lines)):
+	#     rule = trim(lines[i])	# trim current line to get CSS rule
+	#     # extract CSS selector from rule
+	#     selectorCharacters = rule.find('{')
+	#     if selectorCharacters > 0:
+	#         selector = rule[:selectorCharacters]
+	#         # delete selector from rule
+	#         rule = re.sub(r'(\S*\s*\{)', r'', rule)
+	#         rule = re.sub(r'\}', r'', rule)
+	# 	    # sort CSS properties alphabetically
+	# 	    properties = re.sub(r';\s', r';', rule).split(';')
+	# 	    properties = filter(None, properties)					# remove empty elements from list
+	# 	    properties = sorted(properties)
 
-	    # extract CSS selector from rule
-	    # selectorCharacters = rule.find('{')
-	    # if selectorCharacters > 0:
-	    #     selector = rule[:selectorCharacters]	# extract selector
-	    #     # delete selector from rule
-	    #     rule = re.sub(r'(\S*\s*\{)', r'', rule)
-	    #     rule = re.sub(r'\}', r'', rule)
-
-		   #  # sort CSS properties alphabetically
-		   #  properties = filter(None, re.sub(r';\s', r';', rule).split(';'))
-		   #  properties = sorted(properties)
-
-		   #  # reconstruct rule
-		   #  lines[i] = selector + '{' + '; '.join(properties) + ';}'
+	# 		rule = selector + '{' + '; '.join(properties) + ';}'	# reconstruct rule
+		# lines[i] = rule
 
 	code = '\n'.join(lines)
 
@@ -125,9 +123,17 @@ def indent_rules(code):
 		increment = lines[i].count('{') - lines[i].count('}')
 		level = level + increment
 		thisLevel = level - increment if increment > 0 else level
-		lines[i] = re.sub(r'\s*(\S+(\s+\S+)*)\s*', r'\1', lines[i])	# trim
+		lines[i] = trim(lines[i])
 		lines[i] = spaces * thisLevel + lines[i]
 
 	code = '\n'.join(lines)
 
 	return code
+
+def trim(code):
+	code = re.sub(r'^\s*(\S+(\s+\S+)*)\s*$', r'\1', code)
+
+	return code
+
+
+

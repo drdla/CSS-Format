@@ -6,7 +6,7 @@
 			{ "id": "permute" },
 			{
 				"caption": "CSS Format",
-				"args": { "action": "compact" }
+				"command": "css_format"
 			}
 		]
 	},

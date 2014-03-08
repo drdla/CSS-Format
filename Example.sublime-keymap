@@ -2,9 +2,6 @@
 	// Convert to compact format
 	{
 		"keys": ["ctrl+alt+]"],
-		"command": "css_format",
-		"args": {
-			"action": "compact"
-		}
+		"command": "css_format"
 	}
 ]
