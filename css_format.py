@@ -34,7 +34,6 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 			)
 			code = view.substr(region)
 			code = format_code(code, action)
-			#view.sel().clear()
 			view.replace(edit, region, code)
 
 	def format_whole_file(self, edit, action):
@@ -51,7 +50,7 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 		css_family = ['css', 'sass', 'scss', 'less']
 		suffix = ''
 		syntax = ''
-		
+
 		if file_name != None: # file exists, pull syntax type from extension
 			suffix = os.path.splitext(file_name)[1][1:]
 		if syntax_path != None:
