@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, sys, os
+import sublime, sublime_plugin, sys, os, inspect
 
 if sys.version_info < (3, 0):
 	# ST2, Python 2.6
@@ -7,9 +7,31 @@ else:
 	# ST3, Python 3.3
 	from .libs.cssformatter import format_code
 
+def has_css_syntax(view):
+    file_name = view.file_name()
+    syntaxPath = view.settings().get('syntax')
+    syntax = ''
+    extension = ''
+
+    css_family = ['css', 'sass', 'scss', 'less']
+
+    if (file_name != None): # file exists, pull syntax type from extension
+        extension = os.path.splitext(file_name)[1][1:]
+    if (syntaxPath != None):
+        syntax = os.path.splitext(syntaxPath)[0].split('/')[-1].lower()
+
+    return extension in css_family or syntax in css_family
+
+
+class PreSaveFormatListner(sublime_plugin.EventListener):
+    """Event listener to run CSS FOrmat during the presave event"""
+    def on_pre_save(self, view):
+        # if (s.get("format_on_save") == True and has_css_syntax(view)):
+        if has_css_syntax(view):
+            view.run_command("css_format")
+
 
 class CssFormatCommand(sublime_plugin.TextCommand):
-
 	def run(self, edit):
 		view = self.view
 
@@ -44,15 +66,4 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 		view.replace(edit, region, code)
 
 	def is_visible(self):
-		view = self.view
-		file_name = view.file_name()
-		syntax_path = view.settings().get('syntax')
-		css_family = ['css', 'sass', 'scss', 'less']
-		suffix = ''
-		syntax = ''
-
-		if file_name != None: # file exists, pull syntax type from extension
-			suffix = os.path.splitext(file_name)[1][1:]
-		if syntax_path != None:
-			syntax = os.path.splitext(syntax_path)[0].split('/')[-1].lower()
-		return suffix in css_family or syntax in css_family
+		return has_css_syntax(self.view)
