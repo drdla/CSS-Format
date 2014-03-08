@@ -24,11 +24,11 @@ def has_css_syntax(view):
 
 
 class PreSaveFormatListner(sublime_plugin.EventListener):
-    """Event listener to run CSS Format during the presave event"""
+    """Event listener to run CSS True Format during the presave event"""
     def on_pre_save(self, view):
         # if (s.get("format_on_save") == True and has_css_syntax(view)):
         if has_css_syntax(view):
-            view.run_command("css_format")
+            view.run_command('css_true_format')
 
 
 class CssFormatCommand(sublime_plugin.TextCommand):
@@ -36,7 +36,7 @@ class CssFormatCommand(sublime_plugin.TextCommand):
 		view = self.view
 
 		if view.is_loading():
-			sublime.status_message('Waiting for loading.')
+			sublime.status_message('Waiting to be loaded.')
 			return False
 
 		selection = view.sel()[0]

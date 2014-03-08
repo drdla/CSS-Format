@@ -1,7 +1,6 @@
 [
-	// Convert to compact format
 	{
 		"keys": ["ctrl+alt+]"],
-		"command": "css_format"
+		"command": "css_true_format"
 	}
 ]

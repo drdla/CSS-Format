@@ -1,16 +1,5 @@
 [
 	{
-		"id": "edit",
-		"children":
-		[
-			{ "id": "permute" },
-			{
-				"caption": "CSS Format",
-				"command": "css_format"
-			}
-		]
-	},
-	{
 		"id": "preferences",
 		"children":
 		[
@@ -19,13 +8,13 @@
 				"children":
 				[
 					{
-						"caption": "CSS Format",
+						"caption": "CSS True Format",
 						"children":
 						[
 							{
 								"command": "open_file",
 								"args": {
-									"file": "${packages}/CSS Format/Example.sublime-keymap"
+									"file": "${packages}/CSS True Format/Example.sublime-keymap"
 								},
 								"caption": "Key Bindings – Example"
 							},

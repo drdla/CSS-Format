@@ -1,8 +1,8 @@
 [
 	{ "caption": "-" },
 	{
-		"id": "css-format",
-		"caption": "CSS Format",
-        "command": "css_format"
+		"id": "css-true-format",
+		"caption": "Format CSS",
+        "command": "css_true_format"
 	}
 ]
