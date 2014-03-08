@@ -24,7 +24,7 @@ def has_css_syntax(view):
 
 
 class PreSaveFormatListner(sublime_plugin.EventListener):
-    """Event listener to run CSS FOrmat during the presave event"""
+    """Event listener to run CSS Format during the presave event"""
     def on_pre_save(self, view):
         # if (s.get("format_on_save") == True and has_css_syntax(view)):
         if has_css_syntax(view):
