@@ -78,22 +78,26 @@ def comma_rules(code):
 def sort_properties(code):
 	lines = code.split('\n')
 
-	# for i in range(len(lines)):
-	#     rule = trim(lines[i])	# trim current line to get CSS rule
-	#     # extract CSS selector from rule
-	#     selectorCharacters = rule.find('{')
-	#     if selectorCharacters > 0:
-	#         selector = rule[:selectorCharacters]
-	#         # delete selector from rule
-	#         rule = re.sub(r'(\S*\s*\{)', r'', rule)
-	#         rule = re.sub(r'\}', r'', rule)
-	# 	    # sort CSS properties alphabetically
-	# 	    properties = re.sub(r';\s', r';', rule).split(';')
-	# 	    properties = filter(None, properties)					# remove empty elements from list
-	# 	    properties = sorted(properties)
+	for i in range(len(lines)):
+	    # get CSS rule by trimming current line
+	    rule = trim(lines[i])
 
-	# 		rule = selector + '{' + '; '.join(properties) + ';}'	# reconstruct rule
-		# lines[i] = rule
+	    # extract CSS selector from rule
+	    selectorCharacters = rule.find('{')
+	    if selectorCharacters > 0:
+	        selector = rule[:selectorCharacters]
+	        # delete selector from rule
+	        rule = re.sub(r'(\S*\s*\{)', r'', rule)
+	        rule = re.sub(r'\}', r'', rule)
+
+	        # sort CSS properties alphabetically
+	        properties = re.sub(r';\s', r';', rule).split(';')
+	        properties = filter(None, properties)
+	        properties = sorted(properties)
+
+	        rule = selector + '{' + '; '.join(properties) + ';}'	# reconstruct rule
+
+	    lines[i] = rule
 
 	code = '\n'.join(lines)
 
@@ -134,6 +138,3 @@ def trim(code):
 	code = re.sub(r'^\s*(\S+(\s+\S+)*)\s*$', r'\1', code)
 
 	return code
-
-
-
